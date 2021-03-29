@@ -1,8 +1,8 @@
 var mainbody = document.getElementsByTagName("body")[0];
 
-mainbody.innerHTML = '<header id="header1"><h1>My Weather Portal</h1></header>'
-mainbody.innerHTML += '<div id="firstlayer"><div id="h"><h2>Hong Kong</h2></div><div id="headerBlock"><img id="p1"><img id="p2"></div></div>'
-mainbody.innerHTML += '<div id="secondlayer"><h1>sec</h1><div id="myLocation"><h1 in="header2_1">My Location</h1><div id="items-wrapper"></div></div><div id="temperatureofDL"><h1 id="header2_2">Temperatures</h1><h4 id="box3sel">Select the location</h4><div id="items-wrapper2"><select id="station"></select></div></div></div>'
+mainbody.innerHTML = '<header id="header1"><h1 id="weatherPortal">My Weather Portal</h1></header>'
+mainbody.innerHTML += '<div id="firstlayer"><div id="h"><h2 id="hongKong">Hong Kong</h2></div><div id="headerBlock"><img id="p1"><img id="p2"></div></div>'
+mainbody.innerHTML += '<div id="secondlayer"><div id="myLocation"><h1 in="header2_1">My Location</h1><div id="items-wrapper"></div></div><div id="temperatureofDL"><h1 id="header2_2">Temperatures</h1><h4 id="box3sel">Select the location</h4><div id="items-wrapper2"><select id="station"></select></div></div></div>'
 mainbody.innerHTML += '<div id="thirdlayer"><h1>th</h1><div id="ninedayForecast"></div></div>'
 
 /* First block var headerBlock = document.createElement("div");*/
@@ -34,7 +34,7 @@ async function fetchRequestCurrent(){
             let data = await response.json();
             var current = new Date();
             console.log(current.getHours());
-            document.getElementById('firstlayer').setAttribute("style","background-image: url('images/blue-sky.jpg');");
+            
             /* topic */
             var h2 = document.createElement("h2");
             h2.innerHTML= "Hong Kong";
@@ -97,6 +97,7 @@ async function fetchRequestCurrent(){
             uvNum.id = "uvNum";
             if (data.uvindex.data == undefined){
                 console.log("asdasd");
+                uvBox.setAttribute("style","display:none");
                 document.getElementById('headerBlock').append(uvBox);
             } else {
                 uvNum.innerHTML = data.uvindex.data[0].value;
@@ -143,6 +144,26 @@ async function fetchRequestCurrent(){
                     document.getElementById('headerBlock').append(warnBox);
                 }); */
             }
+            if (current.getHours()>=6 && current.getHours()<18){
+                if (data.rainfall.data[13].max > 0){
+                    document.getElementById('firstlayer').setAttribute("style","background-image: url('images/water-drops-glass-day.jpg');");
+                    
+                }
+                else{
+                    document.getElementById('firstlayer').setAttribute("style","background-image: url('images/blue-sky.jpg');");
+                    
+                }
+            }
+            else{
+                if (data.rainfall.data[13].max > 0){
+                    document.getElementById('firstlayer').setAttribute("style","background-image: url('images/water-drops-glass-night.jpg');");
+                    
+                }
+                else{
+                    document.getElementById('firstlayer').setAttribute("style","background-image: url('images/night-sky.jpg');");
+                    
+                }
+            }
             var lupdateBox = document.createElement("div");
             lupdateBox.id = "lupdateBox";
             var lupdateNum = document.createElement("p");
@@ -179,7 +200,7 @@ async function fetchRequestCurrent(){
                             llng = JSON.parse(JSON.stringify(pos.lng));
                             console.log(llat);
                             console.log(llng);
-                            document.getElementById('items-wrapper').append(output);
+                            /* document.getElementById('items-wrapper').append(output); */
                             let locaAPI= 'https://nominatim.openstreetmap.org/reverse?format=json&lat='+pos.lat+'&lon='+pos.lng+'&zoom=18&addressdetails=1&accept-language=en-US';
                             fetch(locaAPI).then(response4 => response4.json()).then(data4=>{
                                 let borough = data4.address.borough;
@@ -266,6 +287,7 @@ async function fetchRequestCurrent(){
                                         if (d < smallest){
                                             smallest = d;
                                             smallestLo = data5[i].station_name_en;
+
                                             console.log(data5[i].station_name_en);
                                             
                                             
@@ -276,7 +298,7 @@ async function fetchRequestCurrent(){
                                         for (var j=0;j<data6.temperature.data.length;j++){
                                             
                                             if (data6.temperature.data[j].place.slice(0,5).localeCompare(smallestLo.slice(0,5)) == 0) {
-                                                console.log(data6.temperature.data[j].value);
+                                                console.log(smallestLo);
                                                 tempartureNum1.innerHTML = data6.temperature.data[j].value;
                                                 
             

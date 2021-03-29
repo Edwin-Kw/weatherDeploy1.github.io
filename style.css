@@ -1,3 +1,114 @@
 img{
     position: relative;
 }
+
+span{
+    color: white;
+    font-size: 50px;
+}
+p{
+    color: white;
+}
+#weatherPortal{
+    font:bold;
+    
+}
+
+#hongKong{
+    color: white;
+    font-size: 40px;
+}
+#headerBlock{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+}
+#wicon{
+    padding:0rem 2rem 4rem 2rem;
+    
+    min-width:120px;
+    min-height:120px;
+}
+#tempartureBox, #tempartureBox1{
+    padding: 2rem;
+    min-width:120px;
+    min-height:120px;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+}
+#humidityBox{
+    padding: 2rem;
+    min-width:120px;
+    min-height:120px;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    
+}
+#humidityPic{
+    display: block;
+    max-width:230px;
+    max-height:45px;
+    width: auto;
+    height: auto;
+}
+#rainfallBox, #rainfallBox1{
+    padding: 2rem;
+    min-width:120px;
+    min-height:120px;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+}
+#rainfallPic, #rainfallBox1{
+    display: block;
+    max-width:230px;
+    max-height:45px;
+    width: auto;
+    height: auto;
+}
+#uvBox{
+    padding: 2rem;
+    min-width:120px;
+    min-height:120px;
+    justify-content: center;
+    align-content: center;
+}
+#lupdateNum{
+    color: white;
+}
+#warnBox{
+    width:75%;
+}
+
+#lupdateBox{
+    width:25%;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    font-size: 18px;
+    justify-content:right;
+}
+#secondlayer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+}
+#myLocation{
+    width: 61%;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem ;
+    background-clip: content-box;
+    
+}
+#temperatureofDL{
+    width: 35%;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem ;
+    background-clip: content-box;
+    background-color: wheat;
+}
