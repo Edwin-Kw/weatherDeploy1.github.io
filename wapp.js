@@ -32,7 +32,8 @@ async function fetchRequestCurrent(){
         let response = await fetch('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en');
         if (response.status == 200) {
             let data = await response.json();
-            
+            var current = new Date();
+            console.log(current.getHours());
             document.getElementById('firstlayer').setAttribute("style","background-image: url('images/blue-sky.jpg');");
             /* topic */
             var h2 = document.createElement("h2");
@@ -231,7 +232,7 @@ async function fetchRequestCurrent(){
                                 var tempartureNum1 = document.createElement("span");
                                 tempartureNum1.id = "tempartureNum1";
                                 console.log(data.temperature.data);
-                                for (var i= 0; i<data.temperature.data.length; i++){
+                                /* for (var i= 0; i<data.temperature.data.length; i++){
                                     if (data.temperature.data[i].place.slice(0,5).localeCompare(district1.innerHTML.slice(0,5)) == 0){
                                         tempartureNum1.innerHTML = data.temperature.data[i].value;
                                     }
@@ -248,7 +249,55 @@ async function fetchRequestCurrent(){
                                 tempartureC1.innerHTML = "°C";
                                 tempartureBox1.append(tempartureNum1);
                                 tempartureBox1.append(tempartureC1);
-                                document.getElementById('items-wrapper').append(tempartureBox1);
+                                document.getElementById('items-wrapper').append(tempartureBox1); */
+
+
+
+                                fetch('data/weather-station-info.json').then(response5 => response5.json()).then(data5=>{
+                                    console.log(data5);
+                                    for (var i= 0; i<data5.length; i++){
+                                        
+
+                                        const x = (data5[i].longitude* Math.PI/180 - llng* Math.PI/180) * Math.cos((llat* Math.PI/180+data5[i].latitude* Math.PI/180)/2);
+                                        const y = (data5[i].latitude* Math.PI/180 - llat* Math.PI/180);
+                                        const d = Math.sqrt(x*x + y*y) * 6371;
+                                        console.log(d);
+
+                                        if (d < smallest){
+                                            smallest = d;
+                                            smallestLo = data5[i].station_name_en;
+                                            console.log(data5[i].station_name_en);
+                                            
+                                            
+                                        }
+                                    }
+                                    fetch('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en').then(response6 => response6.json()).then(data6=>{
+                                        console.log(data6);
+                                        for (var j=0;j<data6.temperature.data.length;j++){
+                                            
+                                            if (data6.temperature.data[j].place.slice(0,5).localeCompare(smallestLo.slice(0,5)) == 0) {
+                                                console.log(data6.temperature.data[j].value);
+                                                tempartureNum1.innerHTML = data6.temperature.data[j].value;
+                                                
+            
+                                            }
+                                        }
+                                        
+                                        
+                                        /* aqPic1.setAttribute("src","images/aqhi-low.png");
+                                        
+                                        aqNum1.innerHTML = data.rainfall.data[13].max;
+                                        
+                                        aqNumSign1.innerHTML = "LOW"; */
+
+                                        var tempartureC1 = document.createElement("p");
+                                        tempartureC1.id = "tempartureC1";
+                                        tempartureC1.innerHTML = "°C";
+                                        tempartureBox1.append(tempartureNum1);
+                                        tempartureBox1.append(tempartureC1);
+                                        document.getElementById('items-wrapper').append(tempartureBox1);
+                                    })
+                                })
 
 
                                 /* rainfall */
@@ -295,20 +344,20 @@ async function fetchRequestCurrent(){
                                 var aqNumSign1 = document.createElement("p");
                                 aqNumSign1.id = "aqNumSign1";
 
-                                fetch('data/ogciopsi.json').then(response5 => response5.json()).then(data5=>{
+                                fetch('data/aqhi-station-info.json').then(response5 => response5.json()).then(data5=>{
                                     console.log(data5);
                                     for (var i= 0; i<data5.length; i++){
                                         
 
-                                        const x = (data5[i].longitude* Math.PI/180 - llng* Math.PI/180) * Math.cos((llat* Math.PI/180+data5[i].latitude* Math.PI/180)/2);
-                                        const y = (data5[i].latitude* Math.PI/180 - llat* Math.PI/180);
+                                        const x = (data5[i].lng* Math.PI/180 - llng* Math.PI/180) * Math.cos((llat* Math.PI/180+data5[i].lat* Math.PI/180)/2);
+                                        const y = (data5[i].lat* Math.PI/180 - llat* Math.PI/180);
                                         const d = Math.sqrt(x*x + y*y) * 6371;
                                         console.log(d);
 
                                         if (d < smallest){
                                             smallest = d;
-                                            smallestLo = data5[i].station_name_en;
-                                            console.log(data5[i].station_name_en);
+                                            smallestLo = data5[i].station;
+                                            console.log(data5[i].station);
                                             
                                             
                                         }
@@ -316,7 +365,8 @@ async function fetchRequestCurrent(){
                                     fetch('https://dashboard.data.gov.hk/api/aqhi-individual?format=json').then(response6 => response6.json()).then(data6=>{
                                         console.log(data6);
                                         for (var j=0;j<data6.length;j++){
-                                            if (data6[j].station.slice(0,5).localeCompare(smallestLo.slice(0,5) == 0)) {
+                                            if (data6[j].station.slice(0,5).localeCompare(smallestLo.slice(0,5)) == 0) {
+                                                console.log("bugtest");
                                                 aqNum1.innerHTML = data6[j].aqhi;
                                                 aqNumSign1.innerHTML = data6[j].health_risk.toUpperCase();
                                                 aqPic1.setAttribute("src","images/aqhi-"+data6[j].health_risk.toLowerCase()+".png");
