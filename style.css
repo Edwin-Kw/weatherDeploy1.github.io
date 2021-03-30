@@ -2,19 +2,41 @@ img{
     position: relative;
 }
 *{
-    font-family: Arial, Helvetica, sans-serif
+    font-family: Arial, Helvetica, sans-serif;
+    
 }
-
+body{
+    background-image: linear-gradient(to bottom right, #99e6e6, #e0ccff);
+}
 span{
     color: white;
+    text-shadow: 1px 1px 2px #333333;
     font-size: 50px;
 }
 p{
     color: white;
+    
+    text-shadow: 1px 1px 2px #333333;
 }
+h1{
+    color: white;
+    text-shadow: 1px 1px 2px #333333;
+}
+h2{
+    color: white;
+    text-shadow: 1px 1px 2px #333333;
+}
+h4{
+    color: white;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px #333333;
+}
+
 #weatherPortal{
     font:bold;
+    color:black;
     margin-left: 15px;
+    
     
 }
 
@@ -31,11 +53,13 @@ p{
     justify-content: center;
 }
 #firstlayer{
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem ;
+    
     background-clip: content-box;
     display: block;
     background-repeat: no-repeat;
     background-size: cover;
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+    box-shadow: 1px 1px 2px black;
 }
 #wicon{
     padding:0rem 2rem 4rem 2rem;
@@ -96,9 +120,19 @@ p{
     color: white;
 }
 #warnBox{
-    width:75%;
+    width:25%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: ;
+    margin-left: 10px;
+    font-size: 18px;
+    justify-content:left;
+    background-color: tomato;
 }
-
+#warnHead{
+    text-align: center;
+}
 #lupdateBox{
     width:25%;
     position: absolute;
@@ -118,11 +152,12 @@ p{
 }
 #myLocation{
     width: 65%;
-    padding-right: 10px;
+    /* padding-right: 10px; */
     background-clip: content-box;
     display: block;
     height :100%;
-    
+    margin-right: 10px;
+    box-shadow: 2px 2px 2px grey;
     
     
 }
@@ -133,17 +168,22 @@ p{
     position: relative;
     justify-content: center;
 }
+#items-wrapper2{
+    justify-content: center;
+    align-items: center;
+}
 #temperatureofDL{
     
     right:0px;
     width: 33%;
     
-    padding-right: 10px;
+    margin-right: 10px;
     bottom: 10px;
     top: 10px;
     position: absolute;
     background-clip: content-box;
-    background-color: wheat;
+    background-color: #6600ff;
+    box-shadow: 2px 2px 2px grey;
 }
 #header2_1{
     position: relative;
@@ -168,8 +208,9 @@ p{
     flex-wrap: wrap;
     position: relative;
     justify-content: center;
-    padding:10px;
+    margin:10px;
     background-clip: content-box;
+    box-shadow: 2px 2px 2px grey;
 }
 .dayBlock{
     padding: 2rem;
@@ -215,19 +256,21 @@ p{
     margin-left: 30px;
 }
 #station{
-    margin-left: 30px;
+    margin-left: 50px;
+    justify-content: center;
+    align-items: center;
 }
 
 
 @media only screen and (max-width: 900px) {
     #myLocation{
         width: 100%;
-        padding-right: 0px;
-        padding-bottom: 10px;
+        margin-right: 0px;
+        margin-bottom: 10px;
     }
     #temperatureofDL{
         width: 100%;
-        padding-right: 0px;
+        margin-right: 0px;
         position: relative;
     }
 }

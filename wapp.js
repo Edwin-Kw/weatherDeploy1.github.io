@@ -29,7 +29,8 @@ function selectFunction(){
 
 async function fetchRequestCurrent(){
     try {
-        let response = await fetch('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en');
+        let response = await fetch('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en'); 
+        /* let response = await fetch('data/weather-php-makeup-raining-morning.json'); */ 
         if (response.status == 200) {
             let data = await response.json();
             var current = new Date();
@@ -106,7 +107,7 @@ async function fetchRequestCurrent(){
                 uvBox.append(uvNum);
                 document.getElementById('headerBlock').append(uvBox);
             }
-            var warnBox = document.createElement("div");
+            var warnBox = document.createElement("button");
             warnBox.id = "warnBox";
             var warnButton = document.createElement("button");
             warnButton.id = "warnButton";
@@ -123,28 +124,40 @@ async function fetchRequestCurrent(){
                 warnMess.innerHTML="";
                 console.log(data.warningMessage.length);
                 for (var i =0; i< data.warningMessage.length;i++){
-                    warnMess.innerHTML += data.warningMessage[i];
+                    warnMess.innerHTML += "‧ "+data.warningMessage[i] + "<br>";
                 }
+                /*testing */
+
+                /* testing */
+
                 warnBox.append(warnMess);
+                warnMess.style.display = 'none';
                 document.getElementById('headerBlock').append(warnBox);
                 var counter = 0;
-                /* document.getElementById("warnButton").addEventListener("click", function() {
-                    warnMess.innerHTML="";
-                    for (var i =0; i<data.warningMessage.length();i++){
+                document.getElementById("warnBox").addEventListener("click", function() {
+                    
+                    /* for (var i =0; i<data.warningMessage.length();i++){
                         warnMess.innerHTML += data.warningMessage[i];
-                    }
-                    if (counter == 1){
-                        warnMess.setAttribute("style","display:none;");
+                    } */
+                    if (warnMess.style.display == 'initial'){
+                        console.log("WARNNNNNNNNN1");
+                        warnMess.style.display = 'none';
+                        
                         counter = 0;
-                    }   else if(counter == 0){
-                        warnMess.setAttribute("style","display:inline;");
+                    }   else {
+                        console.log("WARNNNNNNNNN2");
+                        
+                        warnMess.style.display = 'initial';
+                        
+                        
+                        
                         counter = 1;
                     }
-                    warnBox.append(warnMess);
-                    document.getElementById('headerBlock').append(warnBox);
-                }); */
+                    
+                    
+                });
             }
-            if (current.getHours()>=6 && current.getHours()<18){
+            if ((current.getHours()>=6 && current.getHours()<18)){
                 if (data.rainfall.data[13].max > 0){
                     document.getElementById('firstlayer').setAttribute("style","background-image: url('images/water-drops-glass-day.jpg');");
                     
@@ -177,7 +190,7 @@ async function fetchRequestCurrent(){
                 let response2 = await fetch('data/aqhi-station-info.json');
                 if (response2.status == 200) {
                     console.log(data);
-                    document.getElementById('myLocation').setAttribute("style","background-color:LightGreen;");
+                    document.getElementById('myLocation').setAttribute("style","background-color:#944dff;");
                     function geoFindMe() {
                         var output = document.createElement("p");
                         output.innerHTML = "Locating…";
@@ -198,8 +211,8 @@ async function fetchRequestCurrent(){
                             })); */
                             llat = JSON.parse(JSON.stringify(pos.lat));
                             llng = JSON.parse(JSON.stringify(pos.lng));
-                            console.log(llat);
-                            console.log(llng);
+                            console.log(llat + "asdasdasd");
+                            console.log(llng + "hfghfgh");
                             /* document.getElementById('items-wrapper').append(output); */
                             let locaAPI= 'https://nominatim.openstreetmap.org/reverse?format=json&lat='+pos.lat+'&lon='+pos.lng+'&zoom=18&addressdetails=1&accept-language=en-US';
                             fetch(locaAPI).then(response4 => response4.json()).then(data4=>{
@@ -276,20 +289,22 @@ async function fetchRequestCurrent(){
                                 document.getElementById('items-wrapper').append(tempartureBox1); */
 
 
-
-                                fetch('data/weather-station-info.json').then(response5 => response5.json()).then(data5=>{
+                                var smallest1 = 100000;
+                                var smallestLo1 = "";
+                                fetch('data/ogciopsi.json').then(response5 => response5.json()).then(data5=>{
                                     console.log(data5);
                                     for (var i= 0; i<data5.length; i++){
                                         
 
-                                        const x = (data5[i].longitude* Math.PI/180 - llng* Math.PI/180) * Math.cos((llat* Math.PI/180+data5[i].latitude* Math.PI/180)/2);
-                                        const y = (data5[i].latitude* Math.PI/180 - llat* Math.PI/180);
-                                        const d = Math.sqrt(x*x + y*y) * 6371;
+                                        let x = (data5[i].longitude* Math.PI/180 - llng* Math.PI/180) * Math.cos((llat* Math.PI/180 + data5[i].latitude* Math.PI/180)/2);
+                                        let y = (data5[i].latitude* Math.PI/180 - llat* Math.PI/180);
+                                        let d = Math.sqrt(x*x + y*y) * 6371;
                                         console.log(d);
-
-                                        if (d < smallest){
-                                            smallest = d;
-                                            smallestLo = data5[i].station_name_en;
+                                        console.log(data5[i].latitude + "datad");
+                                        console.log(data5[i].longitude + "datahfghfgh");
+                                        if (d < smallest1){
+                                            smallest1 = d;
+                                            smallestLo1 = data5[i].station_name_en;
 
                                             console.log(data5[i].station_name_en);
                                             
@@ -300,8 +315,9 @@ async function fetchRequestCurrent(){
                                         console.log(data6);
                                         for (var j=0;j<data6.temperature.data.length;j++){
                                             
-                                            if (data6.temperature.data[j].place.slice(0,5).localeCompare(smallestLo.slice(0,5)) == 0) {
-                                                console.log(smallestLo);
+                                            if (data6.temperature.data[j].place.localeCompare(smallestLo1) == 0) {
+                                                console.log(smallestLo1);
+
                                                 tempartureNum1.innerHTML = data6.temperature.data[j].value;
                                                 
             
@@ -375,23 +391,24 @@ async function fetchRequestCurrent(){
                                     for (var i= 0; i<data5.length; i++){
                                         
 
-                                        const x = (data5[i].lng* Math.PI/180 - llng* Math.PI/180) * Math.cos((llat* Math.PI/180+data5[i].lat* Math.PI/180)/2);
-                                        const y = (data5[i].lat* Math.PI/180 - llat* Math.PI/180);
-                                        const d = Math.sqrt(x*x + y*y) * 6371;
+                                        let x = (data5[i].lng* Math.PI/180 - llng* Math.PI/180) * Math.cos((llat* Math.PI/180+data5[i].lat* Math.PI/180)/2);
+                                        let y = (data5[i].lat* Math.PI/180 - llat* Math.PI/180);
+                                        let d = Math.sqrt(x*x + y*y) * 6371;
                                         console.log(d);
 
                                         if (d < smallest){
                                             smallest = d;
                                             smallestLo = data5[i].station;
                                             console.log(data5[i].station);
-                                            
+                                            console.log(data5[i].lat + "datad");
+                                            console.log(data5[i].lng + "datahfghfgh");
                                             
                                         }
                                     }
                                     fetch('https://dashboard.data.gov.hk/api/aqhi-individual?format=json').then(response6 => response6.json()).then(data6=>{
                                         console.log(data6);
                                         for (var j=0;j<data6.length;j++){
-                                            if (data6[j].station.slice(0,5).localeCompare(smallestLo.slice(0,5)) == 0) {
+                                            if (data6[j].station.localeCompare(smallestLo) == 0) {
                                                 console.log("bugtest");
                                                 aqNum1.innerHTML = data6[j].aqhi;
                                                 aqNumSign1.innerHTML = data6[j].health_risk.toUpperCase();
@@ -581,7 +598,7 @@ async function fetchRequest9Day() {
             header3.id = "header3";
             header3.innerHTML = "9-day Forecast";
             document.getElementById('ninedayForecast').append(header3);
-            document.getElementById('ninedayForecast').setAttribute("style","background-color:LightGray;");
+            document.getElementById('ninedayForecast').setAttribute("style","background-color:#330080;");
             for (var i = 0; i< 9; i++) {
                 var dayBlock = document.createElement("div");
                 dayBlock.className = "dayBlock";
