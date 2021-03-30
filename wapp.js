@@ -2,8 +2,8 @@ var mainbody = document.getElementsByTagName("body")[0];
 
 mainbody.innerHTML = '<header id="header1"><h1 id="weatherPortal">My Weather Portal</h1></header>'
 mainbody.innerHTML += '<div id="firstlayer"><div id="h"><h2 id="hongKong">Hong Kong</h2></div><div id="headerBlock"><img id="p1"><img id="p2"></div></div>'
-mainbody.innerHTML += '<div id="secondlayer"><div id="myLocation"><h1 in="header2_1">My Location</h1><div id="items-wrapper"></div></div><div id="temperatureofDL"><h1 id="header2_2">Temperatures</h1><h4 id="box3sel">Select the location</h4><div id="items-wrapper2"><select id="station"></select></div></div></div>'
-mainbody.innerHTML += '<div id="thirdlayer"><h1>th</h1><div id="ninedayForecast"></div></div>'
+mainbody.innerHTML += '<div id="secondlayer"><div id="myLocation"><h1 id="header2_1">My Location</h1><div id="items-wrapper"></div></div><div id="temperatureofDL"><h1 id="header2_2">Temperatures</h1><h4 id="box3sel">Select the location</h4><div id="items-wrapper2"><select id="station"></select></div></div></div>'
+mainbody.innerHTML += '<div id="thirdlayer"><div id="ninedayForecast"></div></div>'
 
 /* First block var headerBlock = document.createElement("div");*/
 
@@ -244,9 +244,12 @@ async function fetchRequestCurrent(){
                                 var suburb1 = document.createElement("p");
                                 suburb1.id = "suburb1";
                                 suburb1.innerHTML = data4.address.suburb; */
-
-                                document.getElementById('items-wrapper').append(district1);
-                                document.getElementById('items-wrapper').append(suburb1);
+                                var wordBox = document.createElement("div");
+                                wordBox.id = "wordBox"
+                                wordBox.append(district1);
+                                wordBox.append(suburb1);
+                                document.getElementById('items-wrapper').append(wordBox);
+                                
                                 /* temp */
                                 var tempartureBox1 = document.createElement("div");
                                 tempartureBox1.id = "tempartureBox1";
@@ -317,7 +320,7 @@ async function fetchRequestCurrent(){
                                         tempartureC1.innerHTML = "°C";
                                         tempartureBox1.append(tempartureNum1);
                                         tempartureBox1.append(tempartureC1);
-                                        document.getElementById('items-wrapper').append(tempartureBox1);
+                                        
                                     })
                                 })
 
@@ -351,6 +354,7 @@ async function fetchRequestCurrent(){
                                 rainfallBox1.append(rainfallPic1);
                                 rainfallBox1.append(rainfallNum1);
                                 rainfallBox1.append(rainfallNumSign1);
+                                document.getElementById('items-wrapper').append(tempartureBox1);
                                 document.getElementById('items-wrapper').append(rainfallBox1);
 
                                 

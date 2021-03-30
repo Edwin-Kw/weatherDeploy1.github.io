@@ -1,6 +1,9 @@
 img{
     position: relative;
 }
+*{
+    font-family: Arial, Helvetica, sans-serif
+}
 
 span{
     color: white;
@@ -11,18 +14,28 @@ p{
 }
 #weatherPortal{
     font:bold;
+    margin-left: 15px;
     
 }
 
 #hongKong{
     color: white;
     font-size: 40px;
+    margin-left: 15px;
 }
 #headerBlock{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     position: relative;
+    justify-content: center;
+}
+#firstlayer{
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem ;
+    background-clip: content-box;
+    display: block;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 #wicon{
     padding:0rem 2rem 4rem 2rem;
@@ -30,7 +43,7 @@ p{
     min-width:120px;
     min-height:120px;
 }
-#tempartureBox, #tempartureBox1{
+#tempartureBox, #tempartureBox1, #tempartureBox2{
     padding: 2rem;
     min-width:120px;
     min-height:120px;
@@ -56,7 +69,7 @@ p{
     width: auto;
     height: auto;
 }
-#rainfallBox, #rainfallBox1{
+#rainfallBox, #rainfallBox1, #aqBox1{
     padding: 2rem;
     min-width:120px;
     min-height:120px;
@@ -65,7 +78,7 @@ p{
     display: flex;
     flex-direction: row;
 }
-#rainfallPic, #rainfallBox1{
+#rainfallPic, #rainfallPic1, #aqPic1{
     display: block;
     max-width:230px;
     max-height:45px;
@@ -99,16 +112,122 @@ p{
     flex-direction: row;
     flex-wrap: wrap;
     position: relative;
-}
-#myLocation{
-    width: 61%;
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem ;
-    background-clip: content-box;
+    padding:10px;
+    
     
 }
+#myLocation{
+    width: 65%;
+    padding-right: 10px;
+    background-clip: content-box;
+    display: block;
+    height :100%;
+    
+    
+    
+}
+#items-wrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: center;
+}
 #temperatureofDL{
-    width: 35%;
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem ;
+    
+    right:0px;
+    width: 33%;
+    
+    padding-right: 10px;
+    bottom: 10px;
+    top: 10px;
+    position: absolute;
     background-clip: content-box;
     background-color: wheat;
+}
+#header2_1{
+    position: relative;
+    margin-left:15px;
+}
+#wordBox{
+    min-width:80%;
+    justify-content: center;
+    align-items: center;
+}
+#district1, #suburb1{
+    justify-content: center;
+    align-items: center;
+    margin-left: 4rem;
+    font-size: 22px;
+    text-size-adjust: 80%;
+
+}
+#ninedayForecast{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: center;
+    padding:10px;
+    background-clip: content-box;
+}
+.dayBlock{
+    padding: 2rem;
+    min-width:120px;
+    min-height:177px;
+    max-width:120px;
+    
+    justify-content: center;
+    align-content: center;
+    display: inline;
+    
+}
+#wicon2{
+    min-width:120px;
+    min-height:120px;
+    max-width:120px;
+    max-height:120px;
+}
+.date{
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+.dayTemp{
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+.dayHum{
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+#header3{
+    position: absolute;
+    left:1rem;
+    top:0px;
+}
+#header2_2{
+    margin-left:10px;;
+}
+#box3sel{
+    margin-left: 30px;
+}
+#station{
+    margin-left: 30px;
+}
+
+
+@media only screen and (max-width: 900px) {
+    #myLocation{
+        width: 100%;
+        padding-right: 0px;
+        padding-bottom: 10px;
+    }
+    #temperatureofDL{
+        width: 100%;
+        padding-right: 0px;
+        position: relative;
+    }
 }
